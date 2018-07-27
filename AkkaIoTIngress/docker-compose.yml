@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  akkaiotingress:
+    image: ${DOCKER_REGISTRY}akkaiotingress
+    build:
+      context: .
+      dockerfile: AkkaIoTIngress\Dockerfile
