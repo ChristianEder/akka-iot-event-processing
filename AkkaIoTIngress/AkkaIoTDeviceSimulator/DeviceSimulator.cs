@@ -10,16 +10,22 @@ namespace AkkaIoTDeviceSimulator
     public class DeviceSimulator
     {
         private readonly string _deviceId;
+        private readonly int _delay;
         private bool _stopped = false;
+        private static Random Random = new Random();
 
-        public DeviceSimulator(string deviceId)
+        public DeviceSimulator(string deviceId, int delay = 5000)
         {
             _deviceId = deviceId;
+            _delay = delay;
         }
 
-        public async void Start()
+        public async Task Start()
         {
-           SendData();
+            await Task.Delay(Random.Next(1, 50));
+            Console.WriteLine("Starting device " + _deviceId);
+            await Task.Run(() => SendData());
+            Console.WriteLine("Started device " + _deviceId);
         }
 
         public async Task Send()
@@ -32,7 +38,7 @@ namespace AkkaIoTDeviceSimulator
         {
             await SendMessage();
 
-            await Task.Delay(5000);
+            await Task.Delay(_delay);
 
             if (!_stopped)
             {
