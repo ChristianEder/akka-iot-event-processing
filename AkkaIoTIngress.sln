@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AkkaIoTIngress", "AkkaIoTIngress\AkkaIoTIngress.csproj", "{17970EBA-EF0E-4223-9670-7E1DE3C47262}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{70C36C75-250D-41FE-84EA-163DE391C66C}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "AkkaIoTIngress.Docker\docker-compose.dcproj", "{70C36C75-250D-41FE-84EA-163DE391C66C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AkkaIoTLoadTest", "..\AkkaIoTLoadTest\AkkaIoTLoadTest.csproj", "{10F76599-9ABE-4B77-B550-B860535011CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AkkaIoTLoadTest", "AkkaIoTLoadTest\AkkaIoTLoadTest.csproj", "{10F76599-9ABE-4B77-B550-B860535011CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AkkaIoTDeviceSimulator", "AkkaIoTDeviceSimulator\AkkaIoTDeviceSimulator.csproj", "{4CC17FAE-0660-4860-833D-B3F2EBA97378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaIoTDeviceSimulator.Console", "..\AkkaIoTDeviceSimulator.Console\AkkaIoTDeviceSimulator.Console.csproj", "{C67DE8F7-D431-41A3-90C8-0BA770E9830A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaIoTDeviceSimulator.Console", "AkkaIoTDeviceSimulator.Console\AkkaIoTDeviceSimulator.Console.csproj", "{C67DE8F7-D431-41A3-90C8-0BA770E9830A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

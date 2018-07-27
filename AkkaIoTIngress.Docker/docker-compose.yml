@@ -5,4 +5,4 @@ services:
     image: ${DOCKER_REGISTRY}akkaiotingress
     build:
       context: .
-      dockerfile: AkkaIoTIngress\Dockerfile
+      dockerfile: ..\AkkaIoTIngress\Dockerfile

@@ -5,7 +5,7 @@
     <DockerTargetOS>Windows</DockerTargetOS>
     <ProjectGuid>70c36c75-250d-41fe-84ea-163de391c66c</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://{ServiceIPAddress}{ServicePort}</DockerServiceUrl>
     <DockerServiceName>akkaiotingress</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AkkaIoTIngress\AkkaIoTDeviceSimulator\AkkaIoTDeviceSimulator.csproj" />
+    <ProjectReference Include="..\AkkaIoTDeviceSimulator\AkkaIoTDeviceSimulator.csproj" />
   </ItemGroup>
 
 </Project>
