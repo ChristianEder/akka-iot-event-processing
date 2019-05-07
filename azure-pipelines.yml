@@ -22,5 +22,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
-    PathtoPublish:./AkkaIoTIngress/bin/$(buildConfiguration)/netcoreapp2.0
-    ArtifactName: akka-iot
+    PathtoPublish: ./AkkaIoTIngress/bin/$(buildConfiguration)/netcoreapp2.0
+    artifactName: akkaiot
