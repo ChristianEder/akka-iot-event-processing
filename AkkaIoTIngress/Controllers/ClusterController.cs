@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Akka.Actor;
+using Akka.DI.Core;
+using AkkaIoTIngress.Actors.Machine;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AkkaIoTIngress.Controllers
@@ -11,10 +11,19 @@ namespace AkkaIoTIngress.Controllers
     [Route("api/Cluster")]
     public class ClusterController : Controller
     {
-        [HttpGet("machine")]
-        public async Task<string> Machine()
+        private readonly ActorSystem _actorSystem;
+
+        public ClusterController(ActorSystem actorSystem)
         {
-            return Environment.MachineName;
+            _actorSystem = actorSystem;
+        }
+
+        [HttpGet("machine")]
+        public async Task<IActionResult> Machine()
+        {
+            var actor = _actorSystem.ActorOf(_actorSystem.DI().Props<MachineActor>(), "akka-iot-backend-machine");
+            var name = await actor.Ask<MachineActor.MachineName>(new MachineActor.WhatsTheMachine());
+            return Ok(name.Name);
         }
     }
 }

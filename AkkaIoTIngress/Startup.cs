@@ -1,9 +1,12 @@
 ﻿﻿using System;
-using Akka.Actor;
+ using System.Linq;
+ using Akka.Actor;
 using Akka.DI.Core;
 using Akka.DI.NetCore;
-using AkkaIoTIngress.Actors.Ingress;
-using AkkaIoTIngress.Services;
+ using AkkaIoTIngress.Actors.Device;
+ using AkkaIoTIngress.Actors.Ingress;
+ using AkkaIoTIngress.Actors.Machine;
+ using AkkaIoTIngress.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +30,12 @@ namespace AkkaIoTIngress
             var actorSystem = ActorSystem.Create("ingress");
             services.AddSingleton<ITableStorage, TableStorage>();
             services.AddSingleton(actorSystem);
+
+            foreach (var actorType in this.GetType().Assembly.GetTypes().Where(t => typeof(ActorBase).IsAssignableFrom(t) && ! t.IsAbstract))
+            {
+                services.AddTransient(actorType);
+            }
+
             var resolver = new NetCoreDependencyResolver(services, actorSystem);
             actorSystem.AddDependencyResolver(resolver);
         }
