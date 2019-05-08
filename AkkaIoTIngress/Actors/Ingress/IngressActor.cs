@@ -11,7 +11,7 @@ namespace AkkaIoTIngress.Actors.Ingress
 {
     public class IngressActor : ReceiveActor
     {
-        private readonly IngressActorProvider _provider;
+        private readonly ActorSystem _system;
         private readonly ITableStorage _tableStorage;
         private EventProcessorHost _eventProcessorHost;
 
@@ -24,9 +24,9 @@ namespace AkkaIoTIngress.Actors.Ingress
             public EventData EventData { get; set; }
         }
 
-        public IngressActor(IngressActorProvider provider, ITableStorage tableStorage)
+        public IngressActor(ActorSystem system, ITableStorage tableStorage)
         {
-            _provider = provider;
+            _system = system;
             _tableStorage = tableStorage;
             ReceiveAsync<StartListening>(OnStart);
             ReceiveAsync<StopListening>(OnStop);
@@ -41,7 +41,7 @@ namespace AkkaIoTIngress.Actors.Ingress
                 Environment.GetEnvironmentVariable("akka-iot-hub-endpoint"),
                 Environment.GetEnvironmentVariable("akka-iot-checkpoint-storage"),
                 "akka-iot-checkpoints");
-            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(new EventProcessorFactory(_provider, _tableStorage));
+            await _eventProcessorHost.RegisterEventProcessorFactoryAsync(new EventProcessorFactory(_system, _tableStorage));
             return true;
         }
 
@@ -60,11 +60,6 @@ namespace AkkaIoTIngress.Actors.Ingress
             var success = await deviceActor.Ask<bool>(new DeviceActor.DeviceMessage { Message = data, PartitionId = message.PartitionId });
             Sender.Tell(success);
             return success;
-        }
-
-        public static Props Props(IngressActorProvider ingressActorProvider, ITableStorage tableStorage)
-        {
-            return Akka.Actor.Props.Create(() => new IngressActor(ingressActorProvider, tableStorage));
         }
 
         private IActorRef Get(string deviceId)

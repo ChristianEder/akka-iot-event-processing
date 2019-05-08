@@ -11,12 +11,12 @@ namespace AkkaIoTIngress.Actors.Ingress
 {
     public class EventProcessor : IEventProcessor
     {
-        private readonly IngressActorProvider _provider;
+        private readonly ActorSystem _actorSystem;
         private readonly ITableStorage _tableStorage;
 
-        public EventProcessor(IngressActorProvider provider, ITableStorage tableStorage)
+        public EventProcessor(ActorSystem actorSystem, ITableStorage tableStorage)
         {
-            _provider = provider;
+            _actorSystem = actorSystem;
             _tableStorage = tableStorage;
         }
 
@@ -49,9 +49,10 @@ namespace AkkaIoTIngress.Actors.Ingress
             {
                 var tasks = new List<Task<bool>>();
 
+                var actorRef = _actorSystem.ActorSelection("akka://user/akka-iot-ingress");
                 foreach (var eventData in messages)
                 {
-                    tasks.Add(_provider.Get().Ask<bool>(new IngressActor.DispatchEventData { EventData = eventData, PartitionId = context.PartitionId }));
+                    tasks.Add(actorRef.Ask<bool>(new IngressActor.DispatchEventData { EventData = eventData, PartitionId = context.PartitionId }));
                 }
 
                 var success = await Task.WhenAll(tasks);

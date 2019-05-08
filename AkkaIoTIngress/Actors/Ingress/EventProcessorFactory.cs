@@ -1,22 +1,23 @@
-﻿using AkkaIoTIngress.Services;
+﻿using Akka.Actor;
+using AkkaIoTIngress.Services;
 using Microsoft.Azure.EventHubs.Processor;
 
 namespace AkkaIoTIngress.Actors.Ingress
 {
     public class EventProcessorFactory : IEventProcessorFactory
     {
-        private readonly IngressActorProvider _provider;
+        private readonly ActorSystem _actorSystem;
         private readonly ITableStorage _tableStorage;
 
-        public EventProcessorFactory(IngressActorProvider provider, ITableStorage tableStorage)
+        public EventProcessorFactory(ActorSystem actorSystem, ITableStorage tableStorage)
         {
-            _provider = provider;
+            _actorSystem = actorSystem;
             _tableStorage = tableStorage;
         }
 
         public IEventProcessor CreateEventProcessor(PartitionContext context)
         {
-            return new EventProcessor(_provider, _tableStorage);
+            return new EventProcessor(_actorSystem, _tableStorage);
         }
     }
 }
